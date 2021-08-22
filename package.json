@@ -1,6 +1,6 @@
 {
   "name": "aws-s3-easy-fileuploader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An easy fileuploader helper for S3 buckets of aws by leganux",
   "main": "index.js",
   "scripts": {
