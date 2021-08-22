@@ -1,0 +1,19 @@
+{
+  "name": "aws-s3-easy-fileuploader",
+  "version": "1.0.0",
+  "description": "An easy fileuploader helper for S3 buckets of aws by leganux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Angel Erick Cruz Olivera",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.973.0",
+    "axios": "^0.19.2",
+    "image-thumbnail": "^1.0.13",
+    "js-file-download": "^0.4.12",
+    "moment": "^2.29.1",
+    "unique-names-generator": "^4.6.0"
+  }
+}
