@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
-const {promisify} = require('util');
-const {uniqueNamesGenerator, adjectives, colors, animals} = require('unique-names-generator');
+const { promisify } = require('util');
+const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
@@ -23,7 +23,7 @@ module.exports = function (options) {
     } = options
 
     if (!AWS_ID || !AWS_KEY) {
-        throw  new Error('You must to configure aws ID and aws Key')
+        throw new Error('You must to configure aws ID and aws Key')
         return
     }
 
@@ -102,7 +102,7 @@ module.exports = function (options) {
                 secretAccessKey: el.KEY
             });
         } catch (e) {
-            throw  e
+            throw e
         }
     }
     this.createBucket = async function () {
@@ -227,6 +227,7 @@ module.exports = function (options) {
             let thumb_ = false
             let upload = promisify(el.S3.upload).bind(el.S3);
             console.log('Extension', ext)
+            
             if (el.THUMB && (['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp'].includes(ext_))) {
                 let thumbnail = await imageThumbnail(file, el.THUMB)
                 let nameFile_thumb = string_folder + 'thumbnails/' + 'thumb_' + nameFile;
@@ -273,14 +274,14 @@ module.exports = function (options) {
                 ext = URL.split('.')[((URL.split('.').length) - 1)]
             }
             if (ext.includes('?')) {
-                ext = ext.split('.')[0]
+                ext = ext.split('?')[0]
             }
 
             if (name.includes('?')) {
-                name = name.split('.')[0]
+                name = name.split('?')[0]
             }
 
-            let path_ = path.resolve(__dirname, 'temp.' + ext)
+            let path_ = path.resolve(__dirname, el.makeid(7) + '_temp.' + ext)
             let writer = fs.createWriteStream(path_)
 
             let response = await axios({
