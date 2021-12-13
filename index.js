@@ -240,13 +240,27 @@ module.exports = function (options) {
                 thumb_ = await upload(thumb_params)
             }
 
-
-            let params = {
-                Bucket: el.BUCKET,
-                Key: (nameFile_file.includes('.') ? nameFile_file : (nameFile_file + '.' + ext)),
-                Body: file,
-                ACL: el.S3_ACL
-            };
+            let params = {}
+            if(ext.includes('pdf')||ext.includes('PDF')){
+         
+                params = {
+                    Bucket: el.BUCKET,
+                    Key: (nameFile_file.includes('.') ? nameFile_file : (nameFile_file + '.' + ext)),
+                    Body: file,
+                    ACL: el.S3_ACL,
+                    ContentType: 'application/pdf',
+                    ContentDisposition: 'inline; filename=test.pdf',
+                    ResponseContentDisposition: 'inline; filename=test.pdf',
+                }
+            }else{
+                params = {
+                    Bucket: el.BUCKET,
+                    Key: (nameFile_file.includes('.') ? nameFile_file : (nameFile_file + '.' + ext)),
+                    Body: file,
+                    ACL: el.S3_ACL,
+                    ContentDisposition : 'inline'
+                }
+            }
 
             let uploadedFile = await upload(params)
             return {
