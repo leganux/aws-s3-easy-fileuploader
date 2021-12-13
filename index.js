@@ -6,7 +6,7 @@ const path = require('path');
 const moment = require('moment');
 const axios = require('axios');
 const FileDownload = require('js-file-download');
-const imageThumbnail = require('image-thumbnail');
+
 
 
 module.exports = function (options) {
@@ -223,22 +223,9 @@ module.exports = function (options) {
 
             let nameFile_file = string_folder + nameFile;
 
-            let ext_ = ext.toLowerCase()
-            let thumb_ = false
+
             let upload = promisify(el.S3.upload).bind(el.S3);
             console.log('Extension', ext)
-            
-            if (el.THUMB && (['jpg', 'png', 'gif', 'jpeg', 'bmp', 'webp'].includes(ext_))) {
-                let thumbnail = await imageThumbnail(file, el.THUMB)
-                let nameFile_thumb = string_folder + 'thumbnails/' + 'thumb_' + nameFile;
-                let thumb_params = {
-                    Bucket: el.BUCKET,
-                    Key: (nameFile_thumb.includes('.') ? nameFile_thumb : (nameFile_thumb + '.' + ext)),
-                    Body: thumbnail,
-                    ACL: el.S3_ACL
-                };
-                thumb_ = await upload(thumb_params)
-            }
 
             let params = {}
             if(ext.includes('pdf')||ext.includes('PDF')){
@@ -265,7 +252,7 @@ module.exports = function (options) {
             let uploadedFile = await upload(params)
             return {
                 file: uploadedFile,
-                thumbnail: thumb_
+                thumbnail: uploadedFile
             }
 
         } catch (e) {
